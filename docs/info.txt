@@ -1,0 +1,6 @@
+Task 1:
+- create a .env file and write .env in .gitignore
+- copy all fields from env.example.txt at root, and paste in .env file
+- fill all .env fields
+
+
