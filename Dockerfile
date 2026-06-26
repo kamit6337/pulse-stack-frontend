@@ -24,10 +24,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Install Doppler via official script (automatically installs Alpine-native build)
-RUN apk add --no-cache curl && \
-    (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://doppler.com | sh) && \
-    apk del curl
+# Pull the static binary directly from Doppler's official image
+COPY --from=dopplerhq/cli:latest /doppler /usr/local/bin/doppler
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
