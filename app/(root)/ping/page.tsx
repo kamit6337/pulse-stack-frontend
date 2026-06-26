@@ -1,19 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Ping } from "@/types/ping";
+import CreateProject from "./CreateProject";
 
-const defaultPing: Ping[] = [
-  // {
-  //   _id: "_id_1",
-  //   name: "Project 1",
-  //   url: "http://localhost:300",
-  // },
-];
+const defaultPing = [];
 
 const PingPage = () => {
   return (
     <main className="flex flex-col">
       <header className="self-end ">
-        <Button>Create Project</Button>
+        <CreateProject />
       </header>
       {defaultPing.length === 0 && (
         <article className="flex justify-center items-center py-40">
