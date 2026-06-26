@@ -11,8 +11,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function ModeToggle() {
-  const { setTheme } = useTheme();
+export default function ModeToggle({ direct = false }) {
+  const { setTheme, theme } = useTheme();
+
+  if (direct) {
+    if (theme === "light") {
+      return (
+        <Button variant="outline" size="icon" onClick={() => setTheme("dark")}>
+          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        </Button>
+      );
+    } else {
+      return (
+        <Button variant="outline" size="icon" onClick={() => setTheme("light")}>
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        </Button>
+      );
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -22,6 +38,7 @@ export default function ModeToggle() {
           <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           <span className="sr-only">Toggle theme</span>
         </Button>
+        <p className="w-full">Theme</p>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
