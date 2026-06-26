@@ -1,5 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
+// const Editor = dynamic(
+//   () => import("@monaco-editor/react"),
+//   { ssr: false }
+// );
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,8 +38,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import Editor from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
+import Editor, { OnMount } from "@monaco-editor/react";
+// import * as monaco from "monaco-editor";
 
 const formSchema = z
   .object({
@@ -87,6 +94,23 @@ const CreateProject = () => {
   });
 
   const responseType = watch("responseType");
+
+  const handleEditorMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
+
+    monaco.editor.onDidChangeMarkers(() => {
+      const markers = monaco.editor.getModelMarkers({
+        resource: editor.getModel()!.uri,
+      });
+
+      setHasJsonErrors(
+        markers.some(
+          (marker: { severity: any }) =>
+            marker.severity === monaco.MarkerSeverity.Error,
+        ),
+      );
+    });
+  };
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -248,23 +272,7 @@ const CreateProject = () => {
                           height="250px"
                           language="json"
                           theme="vs-dark"
-                          onMount={(editor) => {
-                            editorRef.current = editor;
-
-                            monaco.editor.onDidChangeMarkers(() => {
-                              const markers = monaco.editor.getModelMarkers({
-                                resource: editor.getModel()!.uri,
-                              });
-
-                              setHasJsonErrors(
-                                markers.some(
-                                  (marker) =>
-                                    marker.severity ===
-                                    monaco.MarkerSeverity.Error,
-                                ),
-                              );
-                            });
-                          }}
+                          onMount={handleEditorMount}
                         />
                       )}
                     />
