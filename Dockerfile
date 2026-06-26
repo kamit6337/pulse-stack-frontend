@@ -1,6 +1,3 @@
-# ---------- Doppler ----------
-FROM dopplerhq/cli:latest AS doppler
-
 # ---------- Dependencies ----------
 FROM node:22-alpine AS deps
 
@@ -27,8 +24,10 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Copy the Alpine-compatible Doppler binary from the official image
-COPY --from=doppler /usr/bin/doppler /usr/bin/doppler
+# Install Doppler via official script (automatically installs Alpine-native build)
+RUN apk add --no-cache curl && \
+    (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://doppler.com | sh) && \
+    apk del curl
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
