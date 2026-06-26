@@ -27,8 +27,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Copy Doppler CLI
-COPY --from=doppler /usr/local/bin/doppler /usr/local/bin/doppler
+# Copy the Alpine-compatible Doppler binary from the official image
+COPY --from=doppler /usr/bin/doppler /usr/bin/doppler
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
