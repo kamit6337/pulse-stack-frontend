@@ -1,16 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
-import axios from "axios";
-import { BASE_URL } from "../base-url";
-
-const queryFn = async () => {
-  const result = await axios.get(`${BASE_URL}/issues/project`);
-
-  return result.data;
-};
+import { getReq } from "@/config/api";
 
 export const errosProjectQuery = () =>
   queryOptions({
     queryKey: ["Errors Project"],
-    queryFn: () => queryFn(),
+    queryFn: () => getReq("/issues/project"),
     staleTime: Infinity,
+    retry: 3,
   });

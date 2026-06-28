@@ -7,6 +7,7 @@ import ThemeProvider from "@/providers/ThemeProvider";
 import ReactReduxProvider from "@/providers/ReactReduxProvider";
 import ClerkAuthProvider from "@/providers/ClerkAuthProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import AxiosAuthProvider from "@/providers/AxiosAuthProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -53,7 +54,9 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <ClerkAuthProvider>
-                <TooltipProvider>{children}</TooltipProvider>
+                <AxiosAuthProvider>
+                  <TooltipProvider>{children}</TooltipProvider>
+                </AxiosAuthProvider>
               </ClerkAuthProvider>
             </ThemeProvider>
           </ReactReduxProvider>

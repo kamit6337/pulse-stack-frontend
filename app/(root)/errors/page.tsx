@@ -1,4 +1,5 @@
 import CreateProject from "./CreateProject";
+import IssueProjects from "./IssueProjects";
 
 const ErrorsPage = () => {
   return (
@@ -6,7 +7,10 @@ const ErrorsPage = () => {
       <header className="self-end">
         <CreateProject />
       </header>
-      <article>Error Message</article>
+      <article>
+        Error Message
+        <IssueProjects />
+      </article>
     </main>
   );
 };
