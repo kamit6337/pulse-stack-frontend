@@ -26,10 +26,10 @@ export const MonitoringSets: MonitoringSetsType = {
         url: "/ping",
       },
       {
-        title: "Errors",
+        title: "Issues",
         content:
           "Logs the error send by server along with related data. So, update the server code",
-        url: "/errors",
+        url: "/issues",
       },
       {
         title: "Logs",

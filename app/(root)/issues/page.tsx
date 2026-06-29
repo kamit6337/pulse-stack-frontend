@@ -3,15 +3,13 @@ import IssueProjects from "./IssueProjects";
 
 const ErrorsPage = () => {
   return (
-    <main className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
       <header className="self-end">
         <CreateProject />
       </header>
-      <article>
-        Error Message
-        <IssueProjects />
-      </article>
-    </main>
+
+      <IssueProjects />
+    </section>
   );
 };
 

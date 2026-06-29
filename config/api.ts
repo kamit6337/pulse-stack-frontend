@@ -6,14 +6,17 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
-export const getReq = async (path: string, params?: Record<string, any>) => {
+export const getReq = async <T>(
+  path: string,
+  params?: Record<string, any>,
+): Promise<T> => {
   try {
     const result = await api.get(`${BASE_URL}${path}`, {
       params,
       withCredentials: true,
     });
 
-    return result.data;
+    return result.data as T;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const err = {

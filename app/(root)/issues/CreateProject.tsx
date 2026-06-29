@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -29,6 +29,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { postReq } from "@/config/api";
+import { useQuery } from "@tanstack/react-query";
+import { errosProjectQuery } from "@/modules/issues/issuesProject.query";
 
 type BackendFrameworkType = "nodejs" | "expressjs" | "fastify";
 
@@ -64,8 +67,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const CreateProject = () => {
   const [open, setOpen] = useState(false);
-  const editorRef = useRef<any>(null);
-  const [hasJsonErrors, setHasJsonErrors] = useState(false);
+  const { refetch } = useQuery(errosProjectQuery(false));
 
   const {
     register,
@@ -90,7 +92,10 @@ const CreateProject = () => {
 
       // await api.createProject(data);
 
-      await new Promise((r) => setTimeout(r, 2000));
+      const response = await postReq("/issues/project", data);
+      console.log("RESPONSE", response);
+      refetch();
+      // await new Promise((r) => setTimeout(r, 2000));
 
       reset();
 

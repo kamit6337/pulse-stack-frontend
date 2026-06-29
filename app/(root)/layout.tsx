@@ -42,6 +42,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         </div> */}
 
         <main className="px-4">{children}</main>
+        <div className="h-96" />
       </SidebarInset>
     </SidebarProvider>
   );
